@@ -1,5 +1,8 @@
 import { defineMessage } from '@lingui/macro';
-import { WILDFIRE_BOMB_LEEWAY_BUFFER } from 'analysis/retail/hunter/survival/constants';
+import {
+  JUGGLER_CDR,
+  WILDFIRE_BOMB_LEEWAY_BUFFER,
+} from 'analysis/retail/hunter/survival/constants';
 import { formatPercentage } from 'common/format';
 import SPELLS from 'common/SPELLS';
 import TALENTS from 'common/TALENTS/hunter';
@@ -35,8 +38,6 @@ class WildfireBomb extends Analyzer {
 
   private acceptedCastDueToCapping: boolean = false;
   private currentGCD: number = 0;
-  private badRefreshes: number = 0;
-  private lastRefresh: number = 0;
   private casts: number = 0;
   private targetsHit: number = 0;
   // Travel time of Wildfire Bomb can allow you to consume a tip with the following GCD and so tippedCasts should = tippedDamage
@@ -65,18 +66,6 @@ class WildfireBomb extends Analyzer {
 
   get uptimePercentage() {
     return this.enemies.getBuffUptime(SPELLS.WILDFIRE_BOMB_DOT.id) / this.owner.fightDuration;
-  }
-
-  get badWFBThresholds() {
-    return {
-      actual: this.badRefreshes,
-      isGreaterThan: {
-        minor: 2,
-        average: 4,
-        major: 6,
-      },
-      style: ThresholdStyle.NUMBER,
-    };
   }
 
   get uptimeThresholds() {
@@ -122,12 +111,12 @@ class WildfireBomb extends Analyzer {
       this.acceptedCastDueToCapping = true;
     }
 
-    // Covering Fire Cooldown Reduction for Butchery
+    // Pack Leader - Covering Fire Talent Cooldown Reduction for Butchery
     if (this.selectedCombatant.hasTalent(TALENTS.COVERING_FIRE_TALENT)) {
       if (this.spellUsable.isOnCooldown(TALENTS.BUTCHERY_TALENT.id)) {
         this.checkCooldown(TALENTS.BUTCHERY_TALENT.id);
       } else {
-        this.wastedReductionMs += 2000;
+        this.wastedReductionMs += JUGGLER_CDR;
       }
     }
 

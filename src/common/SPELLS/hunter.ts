@@ -270,6 +270,11 @@ const spells = {
     name: 'Harpoon',
     icon: 'ability_hunter_harpoon',
   },
+  GRENADE_JUGGLER_BUFF: {
+    id: 470488,
+    name: 'Grenade Juggler',
+    icon: 'inv_misc_mohawkgrenade',
+  },
   WING_CLIP: {
     id: 195645,
     name: 'Wing Clip',

@@ -1,7 +1,8 @@
 import TALENTS from 'common/TALENTS/hunter';
+import SPELLS from 'common/SPELLS';
 import { JUGGLER_CDR } from 'analysis/retail/hunter/survival/constants';
 import Analyzer, { Options, SELECTED_PLAYER } from 'parser/core/Analyzer';
-import Events, { CastEvent } from 'parser/core/Events';
+import Events, { CastEvent, ApplyBuffEvent, RefreshBuffEvent } from 'parser/core/Events';
 import SpellUsable from 'parser/shared/modules/SpellUsable';
 import BoringSpellValueText from 'parser/ui/BoringSpellValueText';
 import Statistic from 'parser/ui/Statistic';
@@ -26,6 +27,8 @@ class GrenadeJuggler extends Analyzer {
   private reductionAtCurrentCast: number = 0;
   private effectiveReductionMs: number = 0;
   private wastedReductionMs: number = 0;
+  private jugglerProcs: number = 0;
+  private wastedProcs: number = 0;
   private autoAttack: number = 0;
   constructor(options: Options) {
     super(options);
@@ -39,6 +42,29 @@ class GrenadeJuggler extends Analyzer {
       Events.cast.by(SELECTED_PLAYER).spell(TALENTS.EXPLOSIVE_SHOT_TALENT),
       this.onCast,
     );
+    this.addEventListener(
+      Events.applybuff.by(SELECTED_PLAYER).spell(SPELLS.GRENADE_JUGGLER_BUFF),
+      this.onApplyBuff,
+    );
+    this.addEventListener(
+      Events.refreshbuff.by(SELECTED_PLAYER).spell(SPELLS.GRENADE_JUGGLER_BUFF),
+      this.onRefreshBuff,
+    );
+  }
+  onApplyBuff(event: ApplyBuffEvent) {
+    if (!this.spellUsable.isOnCooldown(TALENTS.EXPLOSIVE_SHOT_TALENT.id)) {
+      return;
+    }
+    this.spellUsable.endCooldown(TALENTS.EXPLOSIVE_SHOT_TALENT.id, event.timestamp);
+    this.jugglerProcs += 1;
+  }
+  onRefreshBuff(event: RefreshBuffEvent) {
+    if (!this.spellUsable.isOnCooldown(TALENTS.EXPLOSIVE_SHOT_TALENT.id)) {
+      return;
+    }
+    this.spellUsable.endCooldown(SPELLS.EXPLOSIVE_SHOT_DAMAGE.id, event.timestamp);
+    this.jugglerProcs += 1;
+    this.wastedProcs += 1;
   }
 
   onCast(event: CastEvent) {
@@ -71,9 +97,13 @@ class GrenadeJuggler extends Analyzer {
         <BoringSpellValueText spell={TALENTS.GRENADE_JUGGLER_TALENT}>
           <>
             {formatDurationMillisMinSec(this.effectiveReductionMs)}{' '}
-            <small>cooldown reduction.</small>
+            <small>Wildfire cooldown reduction.</small>
             <br />
-            {formatDurationMillisMinSec(this.wastedReductionMs)} <small>wasted.</small>
+            {formatDurationMillisMinSec(this.wastedReductionMs)} <small> wasted.</small>
+            <br />
+            {this.jugglerProcs} <small>Grenades juggled.</small>
+            <br />
+            {this.wastedProcs} <small>Explosive Shot resets wasted.</small>
           </>
         </BoringSpellValueText>
       </Statistic>
