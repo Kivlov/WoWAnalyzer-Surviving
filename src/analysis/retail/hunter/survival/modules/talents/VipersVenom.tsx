@@ -14,7 +14,9 @@ import STATISTIC_CATEGORY from 'parser/ui/STATISTIC_CATEGORY';
 import STATISTIC_ORDER from 'parser/ui/STATISTIC_ORDER';
 
 /**
- * Hurl a bomb at the target, exploding for (45% of Attack power) Fire damage in a cone and coating enemies in wildfire, scorching them for (90% of Attack power) Fire damage over 6 sec.
+ * Raptor Strike and Mongoose Bite apply Serpent Sting to your target.
+ * Serpent Sting fires a poison-tipped arrow at an enemy, dealing (26.8% of attack power) Nature damage instantly and an additional (125.6% of attack power) over 12 sec.
+ * Serpent Sting is Hasted and can pandemic
  *
  * Example log:
  * https://www.warcraftlogs.com/reports/6GjD12YkQCnJqPTz#fight=25&type=damage-done&source=19&translate=true&ability=-259495
