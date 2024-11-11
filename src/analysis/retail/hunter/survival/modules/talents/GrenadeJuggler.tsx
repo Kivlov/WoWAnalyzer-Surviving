@@ -9,10 +9,10 @@ import STATISTIC_CATEGORY from 'parser/ui/STATISTIC_CATEGORY';
 import { formatDurationMillisMinSec } from 'common/format';
 
 /**
- * Grenade Juggler reduces the remaining cooldown on Wildfire Bomb by 1.0 sec on auto-attack.
+ * Grenade Juggler reduces the remaining cooldown on Wildfire Bomb by 2.0 sec on Explosive Shot cast.
  *
  * Example logs:
- * https://www.warcraftlogs.com/reports/GcyfdwP1XTJrR3h7#fight=15&source=8&type=damage-done&ability=212436
+ * https://www.warcraftlogs.com/reports/1c9HdABGLYnNXFjP#fight=31&type=casts&source=17&ability=212431
  */
 
 class GrenadeJuggler extends Analyzer {
