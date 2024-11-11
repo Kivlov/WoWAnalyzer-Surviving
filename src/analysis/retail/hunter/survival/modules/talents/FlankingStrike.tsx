@@ -51,14 +51,6 @@ class FlankingStrike extends Analyzer {
       Events.damage.by(SELECTED_PLAYER).spell(SPELLS.FLANKING_STRIKE_PLAYER),
       this.onPlayerDamage,
     );
-    // this.addEventListener(
-    //   Events.resourcechange.by(SELECTED_PLAYER_PET).spell(SPELLS.FLANKING_STRIKE_PET),
-    //   this.onPetEnergize,
-    // );
-    // this.addEventListener(
-    //   Events.resourcechange.by(SELECTED_PLAYER).spell(SPELLS.FLANKING_STRIKE_PLAYER),
-    //   this.onPlayerEnergize,
-    // );
   }
 
   get flankingStrikesPlayer() {
@@ -103,22 +95,6 @@ class FlankingStrike extends Analyzer {
   onPlayerDamage(event: DamageEvent) {
     this.flankingStrikesPlayer.damage += event.amount + (event.absorbed || 0);
   }
-
-  // onPetEnergize(event: ResourceChangeEvent) {
-  //   const effectiveFocus = event.resourceChange - event.waste || 0;
-  //   const pet = this.getOrInitializePet(event.sourceID);
-  //   if (!pet) {
-  //     return;
-  //   }
-  //   pet.effectiveFocus += effectiveFocus;
-  //   pet.possibleFocus += FLANKING_STRIKE_FOCUS_GAIN;
-  // }
-
-  // onPlayerEnergize(event: ResourceChangeEvent) {
-  //   const foundPlayer = this.flankingStrikesPlayer;
-  //   foundPlayer.effectiveFocus += event.resourceChange - event.waste || 0;
-  //   foundPlayer.possibleFocus += FLANKING_STRIKE_FOCUS_GAIN;
-  // }
 
   statistic() {
     const totalDamage = this.flankingStrikes

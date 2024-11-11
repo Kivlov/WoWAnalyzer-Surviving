@@ -1,4 +1,7 @@
-import { BUTCHERY_CARVE_MAX_TARGETS_HIT } from 'analysis/retail/hunter/survival/constants';
+import {
+  BUTCHERY_CARVE_MAX_TARGETS_HIT,
+  FRENZIED_STRIKES_CDR,
+} from 'analysis/retail/hunter/survival/constants';
 import TALENTS from 'common/TALENTS/hunter';
 import Analyzer, { Options, SELECTED_PLAYER } from 'parser/core/Analyzer';
 import Events, { DamageEvent } from 'parser/core/Events';
@@ -53,21 +56,21 @@ class Butchery extends Analyzer {
     if (this.reductionAtCurrentCast === BUTCHERY_CARVE_MAX_TARGETS_HIT) {
       return;
     }
-    this.reductionAtCurrentCast += 3;
+    this.reductionAtCurrentCast += 1;
     if (this.spellUsable.isOnCooldown(TALENTS.WILDFIRE_BOMB_TALENT.id)) {
       this.checkCooldown(TALENTS.WILDFIRE_BOMB_TALENT.id);
     } else {
-      this.wastedReductionMs += 3000;
+      this.wastedReductionMs += FRENZIED_STRIKES_CDR;
     }
   }
 
   checkCooldown(spellId: number) {
-    if (this.spellUsable.cooldownRemaining(spellId) < 3000) {
-      const effectiveReductionMs = this.spellUsable.reduceCooldown(spellId, 3000);
+    if (this.spellUsable.cooldownRemaining(spellId) < FRENZIED_STRIKES_CDR) {
+      const effectiveReductionMs = this.spellUsable.reduceCooldown(spellId, FRENZIED_STRIKES_CDR);
       this.effectiveReductionMs += effectiveReductionMs;
-      this.wastedReductionMs += 3000 - effectiveReductionMs;
+      this.wastedReductionMs += FRENZIED_STRIKES_CDR - effectiveReductionMs;
     } else {
-      this.effectiveReductionMs += this.spellUsable.reduceCooldown(spellId, 3000);
+      this.effectiveReductionMs += this.spellUsable.reduceCooldown(spellId, FRENZIED_STRIKES_CDR);
     }
   }
 

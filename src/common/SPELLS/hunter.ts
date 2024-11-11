@@ -135,16 +135,6 @@ const spells = {
     name: 'Bursting Shot',
     icon: 'ability_hunter_burstingshot',
   },
-  EXPLOSIVE_SHOT_DETONATION: {
-    id: 212679,
-    name: 'Explosive Shot: Detonate!',
-    icon: '6bf_explosive_shard',
-  },
-  EXPLOSIVE_SHOT_DAMAGE: {
-    id: 212680,
-    name: 'Explosive Shot',
-    icon: '6bf_explosive_shard',
-  },
   RAPID_FIRE: {
     id: 257044,
     name: 'Rapid Fire',
@@ -225,11 +215,7 @@ const spells = {
     name: 'Chimaera Shot',
     icon: 'ability_hunter_chimerashot2',
   },
-  DEATHBLOW_BUFF: {
-    id: 378770,
-    name: 'Deathblow',
-    icon: 'ability_hunter_runningshot',
-  },
+
   //endregion
 
   //region Survival
@@ -383,6 +369,11 @@ const spells = {
     icon: 'ability_maldraxxus_hunter',
     name: 'Death Chakram',
   },
+  DEATHBLOW_BUFF: {
+    id: 378770,
+    name: 'Deathblow',
+    icon: 'ability_hunter_runningshot',
+  },
   REJUVENATING_WIND_BUFF: {
     id: 385540,
     name: 'Rejuvenating Winds',
@@ -400,6 +391,11 @@ const spells = {
   },
   KILL_SHOT_MM_BM: {
     id: 53351,
+    name: 'Kill Shot',
+    icon: 'ability_hunter_assassinate2',
+  },
+  KILL_SHOT_SV: {
+    id: 320976,
     name: 'Kill Shot',
     icon: 'ability_hunter_assassinate2',
   },
@@ -512,6 +508,16 @@ const spells = {
     id: 392058,
     name: 'Wailing Arrow',
     icon: 'ability_theblackarrow',
+  },
+  EXPLOSIVE_SHOT_CAST: {
+    id: 212431,
+    name: 'Explosive Shot',
+    icon: 'ability_hunter_explosiveshot',
+  },
+  EXPLOSIVE_SHOT_DAMAGE: {
+    id: 212680,
+    name: 'Explosive Shot',
+    icon: '6bf_explosive_shard',
   },
   //endregion
 

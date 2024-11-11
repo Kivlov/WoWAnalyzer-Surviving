@@ -3,7 +3,7 @@ import TALENTS from 'common/TALENTS/hunter';
 
 //region Spells
 /** Butchery / Carve */
-//Butchery and Carve can hit up to 5 people
+//Butchery and Carve can hit up to 5 targets for Frenzied Strikes
 export const BUTCHERY_CARVE_MAX_TARGETS_HIT = 5;
 /** Coordinated Assault */
 //Coordinated Assault increases all damage done by 20%
@@ -43,12 +43,10 @@ export const TIPPABLE_ABILITY = [
 /** Aspect of the Eagle */
 //This is the baseline cooldown of Aspect of the Eagle
 export const BASELINE_AOTE_CD = 90000;
-/** Bird of Prey */
-//Bird of Prey extends Coordinated Assault by 1.5 seconds per trigger
-export const BOP_CA_EXTENSION_PER_CAST = 0;
-/** Flanking Strike */
-//Flanking Strikes regenerates 30 focus
-export const FLANKING_STRIKE_FOCUS_GAIN = 0;
+/** Frenzied Strikes */
+export const FRENZIED_STRIKES_CDR = 3000;
+/** Grenade Juggler */
+export const JUGGLER_CDR = 2000;
 /** Mongoose Bite */
 //Mongoose Bite has traveltime, so if used during Aspect of the Eagle it can have up to 700ms travel time
 export const MONGOOSE_BITE_MAX_TRAVEL_TIME = 700;
@@ -64,15 +62,9 @@ export const AFFECTED_BY_GUERRILLA_TACTICS = [SPELLS.WILDFIRE_BOMB_IMPACT];
 export const TIP_DAMAGE_INCREASE = 0.15;
 //Tip maximum stacks
 export const TIP_MAX_STACKS = 3;
-/** Alpha Predator */
-//The damage increase from Alpha Predator
-export const ALPHA_DAMAGE_KC_MODIFIER = 0.15;
 /** Bloodseeker */
 //Attack speed gain per bleeding enemy from Bloodseeker
 export const BLOODSEEKER_ATTACK_SPEED_GAIN = 0.1;
-/** Hydra's Bite */
-//Hydra's Bite DOT damage increase
-export const HYDRAS_BITE_DOT_MODIFIER = 0.2;
 //endregion
 /** Explosives Expert */
 // Explosives Expert cooldown reduction

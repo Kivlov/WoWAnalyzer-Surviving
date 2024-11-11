@@ -31,7 +31,7 @@ class KillCommand extends Analyzer {
   protected globalCooldown!: GlobalCooldown;
 
   private resets: number = 0;
-  private cooldownReduction: number = 0;
+
   private wastedReductionMs: number = 0;
   private effectiveReductionMs: number = 0;
   constructor(options: Options) {
@@ -54,7 +54,7 @@ class KillCommand extends Analyzer {
 
   onCast(event: CastEvent) {
     if (!this.selectedCombatant.hasTalent(TALENTS.WILDFIRE_INFUSION_TALENT)) {
-      this.cooldownReduction = 0;
+      this.effectiveReductionMs = 0;
       return;
     }
     if (this.spellUsable.isOnCooldown(TALENTS.WILDFIRE_BOMB_TALENT.id)) {

@@ -2,7 +2,9 @@ import CoreCombatLogParser from 'parser/core/CombatLogParser';
 import ArcaneTorrent from 'parser/shared/modules/racials/bloodelf/ArcaneTorrent';
 import {
   BindingShot,
+  Deathblow,
   DeathTracker,
+  ExplosiveShot,
   FocusCapTracker,
   FocusDetails,
   FocusTracker,
@@ -15,7 +17,6 @@ import {
   TranquilizingShot,
 } from '../shared';
 import Abilities from './modules/Abilities';
-import AlphaPredator from './modules/talents/AlphaPredator';
 import AlwaysBeCasting from './modules/features/AlwaysBeCasting';
 import Bloodseeker from './modules/talents/Bloodseeker';
 import Buffs from './modules/Buffs';
@@ -26,7 +27,6 @@ import CoordinatedAssault from './modules/talents/CoordinatedAssault';
 import FlankingStrike from './modules/talents/FlankingStrike';
 import Focus from './modules/resources/Focus';
 import GlobalCooldown from './modules/core/GlobalCooldown';
-import GuerrillaTactics from './modules/talents/GuerrillaTactics';
 import KillCommand from './modules/talents/KillCommand';
 import MongooseBite from './modules/talents/MongooseBite';
 import RaptorStrike from './modules/talents/RaptorStrike';
@@ -66,13 +66,11 @@ class CombatLogParser extends CoreCombatLogParser {
     deathTracker: DeathTracker,
 
     //Spells
-    alphaPredator: AlphaPredator,
     bloodseeker: Bloodseeker,
     butchery: Butchery,
     coordinatedAssault: CoordinatedAssault,
     flankingStrike: FlankingStrike,
     frenzyStrikes: FrenzyStrikes,
-    guerrillaTactics: GuerrillaTactics,
     killCommand: KillCommand,
     mongooseBite: MongooseBite,
     raptorStrike: RaptorStrike,
@@ -85,6 +83,8 @@ class CombatLogParser extends CoreCombatLogParser {
 
     //Shared Talents
     bindingShot: BindingShot,
+    deathBlow: Deathblow,
+    explosiveShot: ExplosiveShot,
     killShot: KillShot,
     masterMarksman: MasterMarksman,
     naturalMending: NaturalMending,

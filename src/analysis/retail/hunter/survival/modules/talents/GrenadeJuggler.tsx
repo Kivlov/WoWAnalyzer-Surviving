@@ -1,4 +1,5 @@
 import TALENTS from 'common/TALENTS/hunter';
+import { JUGGLER_CDR } from 'analysis/retail/hunter/survival/constants';
 import Analyzer, { Options, SELECTED_PLAYER } from 'parser/core/Analyzer';
 import Events, { CastEvent } from 'parser/core/Events';
 import SpellUsable from 'parser/shared/modules/SpellUsable';
@@ -45,18 +46,18 @@ class GrenadeJuggler extends Analyzer {
     if (this.spellUsable.isOnCooldown(TALENTS.WILDFIRE_BOMB_TALENT.id)) {
       this.checkCooldown(TALENTS.WILDFIRE_BOMB_TALENT.id);
     } else {
-      this.wastedReductionMs += 2000;
+      this.wastedReductionMs += JUGGLER_CDR;
     }
     this.autoAttack += 1;
   }
 
   checkCooldown(spellId: number) {
-    if (this.spellUsable.cooldownRemaining(spellId) < 2000) {
-      const effectiveReductionMs = this.spellUsable.reduceCooldown(spellId, 2000);
+    if (this.spellUsable.cooldownRemaining(spellId) < JUGGLER_CDR) {
+      const effectiveReductionMs = this.spellUsable.reduceCooldown(spellId, JUGGLER_CDR);
       this.effectiveReductionMs += effectiveReductionMs;
-      this.wastedReductionMs += 2000 - effectiveReductionMs;
+      this.wastedReductionMs += JUGGLER_CDR - effectiveReductionMs;
     } else {
-      this.effectiveReductionMs += this.spellUsable.reduceCooldown(spellId, 2000);
+      this.effectiveReductionMs += this.spellUsable.reduceCooldown(spellId, JUGGLER_CDR);
     }
   }
 

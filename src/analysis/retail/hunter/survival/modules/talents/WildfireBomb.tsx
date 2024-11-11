@@ -42,8 +42,9 @@ class WildfireBomb extends Analyzer {
   // Travel time of Wildfire Bomb can allow you to consume a tip with the following GCD and so tippedCasts should = tippedDamage
   private tippedCast: number = 0;
   private tippedDamage: number = 0;
-  private castedAtCap: number = 0;
   private goodCast: number = 0;
+  private effectiveReductionMs: number = 0;
+  private wastedReductionMs: number = 0;
   constructor(options: Options) {
     super(options);
 
@@ -93,7 +94,7 @@ class WildfireBomb extends Analyzer {
     return {
       actual: this.untippedCastPercentage,
       isLessThan: {
-        minor: 1.0,
+        minor: 0.95,
         average: 0.85,
         major: 0.75,
       },
@@ -119,20 +120,40 @@ class WildfireBomb extends Analyzer {
         WILDFIRE_BOMB_LEEWAY_BUFFER + this.currentGCD
     ) {
       this.acceptedCastDueToCapping = true;
-      this.goodCast += 1;
     }
 
+    // Covering Fire Cooldown Reduction for Butchery
+    if (this.selectedCombatant.hasTalent(TALENTS.COVERING_FIRE_TALENT)) {
+      if (this.spellUsable.isOnCooldown(TALENTS.BUTCHERY_TALENT.id)) {
+        this.checkCooldown(TALENTS.BUTCHERY_TALENT.id);
+      } else {
+        this.wastedReductionMs += 2000;
+      }
+    }
+
+    // Good or Bad Cast Checking Tip, CA is almost up, or capped are good casts of bomb.
     if (this.selectedCombatant.hasOwnBuff(SPELLS.TIP_OF_THE_SPEAR_CAST.id)) {
       this.tippedCast += 1;
       this.goodCast += 1;
     } else if (
       !this.spellUsable.isOnCooldown(TALENTS.COORDINATED_ASSAULT_TALENT.id) ||
-      this.spellUsable.cooldownRemaining(TALENTS.COORDINATED_ASSAULT_TALENT.id) < 4
+      this.spellUsable.cooldownRemaining(TALENTS.COORDINATED_ASSAULT_TALENT.id) < 4000
     ) {
+      this.goodCast += 1;
+    } else if (this.acceptedCastDueToCapping) {
       this.goodCast += 1;
     }
   }
 
+  checkCooldown(spellId: number) {
+    if (this.spellUsable.cooldownRemaining(spellId) < 2000) {
+      const effectiveReductionMs = this.spellUsable.reduceCooldown(spellId, 2000);
+      this.effectiveReductionMs += effectiveReductionMs;
+      this.wastedReductionMs += 2000 - effectiveReductionMs;
+    } else {
+      this.effectiveReductionMs += this.spellUsable.reduceCooldown(spellId, 2000);
+    }
+  }
   onDamage(event: DamageEvent) {
     if (this.casts === 0) {
       this.casts += 1;
