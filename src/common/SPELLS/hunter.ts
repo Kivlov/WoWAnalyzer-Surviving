@@ -360,6 +360,11 @@ const spells = {
     name: 'Fury of the Eagle',
     icon: 'inv_polearm_2h_artifacteagle_d_01',
   },
+  MERCILESS_BLOW_DAMAGE: {
+    id: 459870,
+    name: 'Merciless Blow',
+    icon: 'ability_hunter_swiftstrike',
+  },
   //endregion
 
   //region Shared

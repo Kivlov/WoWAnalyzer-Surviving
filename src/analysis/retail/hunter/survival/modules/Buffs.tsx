@@ -22,6 +22,11 @@ class Buffs extends CoreAuras {
         timelineHighlight: true,
       },
       {
+        spellId: TALENTS.TIP_OF_THE_SPEAR_TALENT.id,
+        timelineHighlight: true,
+        triggeredBySpellId: [TALENTS.KILL_COMMAND_SURVIVAL_TALENT.id],
+      },
+      {
         spellId: SPELLS.ASPECT_OF_THE_TURTLE.id,
         timelineHighlight: true,
       },

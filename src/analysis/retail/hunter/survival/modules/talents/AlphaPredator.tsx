@@ -38,6 +38,8 @@ class AlphaPredator extends Analyzer {
   }
 
   statistic() {
+    return;
+    // Not a particularly useful statistic so suppressing it. Talent is taken for the 2nd charge, not the damage.
     return (
       <Statistic
         position={STATISTIC_ORDER.OPTIONAL(1)}

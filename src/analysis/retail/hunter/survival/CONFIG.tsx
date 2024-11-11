@@ -30,10 +30,14 @@ const config: Config = {
       community. The <kbd>#Survival</kbd> channel is also a great place to post feedback for this
       analyzer, as I'll be very likely to see it there. <br />
       <br />
-      The best guide available currently is the guide on{' '}
-      <a href="https://www.icy-veins.com/wow/survival-hunter-pve-dps-guide">Icy-Veins</a>. It is
-      maintained by Azortharion, and it is constantly fact-checked by community-members, and
-      improved upon on an almost weekly basis.
+      The best guides available currently are the guides on{' '}
+      <a href="https://www.wowhead.com/guide/classes/hunter/survival/overview-pve-dps">
+        {' '}
+        WoWHead or{' '}
+      </a>{' '}
+      <a href="https://www.icy-veins.com/wow/survival-hunter-pve-dps-guide">Icy-Veins</a>. WoWHead
+      is maintained by Thyminde and Doolb and Icy-Veins by Azortharion, and they are constantly
+      fact-checked by community-members, and improved upon on an almost weekly basis.
       <br />
       <br />
     </>

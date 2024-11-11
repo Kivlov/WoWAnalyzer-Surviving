@@ -27,7 +27,6 @@ import FlankingStrike from './modules/talents/FlankingStrike';
 import Focus from './modules/resources/Focus';
 import GlobalCooldown from './modules/core/GlobalCooldown';
 import GuerrillaTactics from './modules/talents/GuerrillaTactics';
-import HydrasBite from './modules/talents/HydrasBite';
 import KillCommand from './modules/talents/KillCommand';
 import MongooseBite from './modules/talents/MongooseBite';
 import RaptorStrike from './modules/talents/RaptorStrike';
@@ -37,7 +36,9 @@ import TipOfTheSpearNormalizer from './normalizers/TipOfTheSpear';
 import WildfireBomb from './modules/talents/WildfireBomb';
 import FrenzyStrikes from './modules/talents/FrenzyStrikes';
 import RuthlessMarauder from 'analysis/retail/hunter/survival/modules/talents/RuthlessMarauder';
-
+import Lunge from './modules/talents/Lunge';
+import GrenadeJuggler from './modules/talents/GrenadeJuggler';
+import VipersVenom from './modules/talents/VipersVenom';
 class CombatLogParser extends CoreCombatLogParser {
   static specModules = {
     // Core statistics
@@ -72,13 +73,15 @@ class CombatLogParser extends CoreCombatLogParser {
     flankingStrike: FlankingStrike,
     frenzyStrikes: FrenzyStrikes,
     guerrillaTactics: GuerrillaTactics,
-    hydrasBite: HydrasBite,
     killCommand: KillCommand,
     mongooseBite: MongooseBite,
     raptorStrike: RaptorStrike,
     tipOfTheSpear: TipOfTheSpear,
     wildfireBomb: WildfireBomb,
     ruthlessMarauder: RuthlessMarauder,
+    lunge: Lunge,
+    grenadeJuggler: GrenadeJuggler,
+    vipersVenom: VipersVenom,
 
     //Shared Talents
     bindingShot: BindingShot,

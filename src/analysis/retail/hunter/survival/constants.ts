@@ -30,15 +30,25 @@ export const RAPTOR_MONGOOSE_VARIANTS = [
   TALENTS.MONGOOSE_BITE_TALENT,
   SPELLS.MONGOOSE_BITE_TALENT_AOTE,
 ];
+export const TIPPABLE_ABILITY = [
+  TALENTS.RAPTOR_STRIKE_TALENT,
+  SPELLS.RAPTOR_STRIKE_AOTE,
+  TALENTS.MONGOOSE_BITE_TALENT,
+  SPELLS.MONGOOSE_BITE_TALENT_AOTE,
+  TALENTS.BUTCHERY_TALENT,
+  TALENTS.FLANKING_STRIKE_TALENT,
+  TALENTS.EXPLOSIVE_SHOT_TALENT,
+  TALENTS.FURY_OF_THE_EAGLE_TALENT,
+];
 /** Aspect of the Eagle */
 //This is the baseline cooldown of Aspect of the Eagle
 export const BASELINE_AOTE_CD = 90000;
 /** Bird of Prey */
 //Bird of Prey extends Coordinated Assault by 1.5 seconds per trigger
-export const BOP_CA_EXTENSION_PER_CAST = 1500;
+export const BOP_CA_EXTENSION_PER_CAST = 0;
 /** Flanking Strike */
 //Flanking Strikes regenerates 30 focus
-export const FLANKING_STRIKE_FOCUS_GAIN = 30;
+export const FLANKING_STRIKE_FOCUS_GAIN = 0;
 /** Mongoose Bite */
 //Mongoose Bite has traveltime, so if used during Aspect of the Eagle it can have up to 700ms travel time
 export const MONGOOSE_BITE_MAX_TRAVEL_TIME = 700;
@@ -79,6 +89,8 @@ export const LIST_OF_FOCUS_SPENDERS_SV = [
   TALENTS.BUTCHERY_TALENT,
   TALENTS.KILL_SHOT_SURVIVAL_TALENT,
   TALENTS.WILDFIRE_BOMB_TALENT,
+  TALENTS.FLANKING_STRIKE_TALENT,
+  TALENTS.EXPLOSIVE_SHOT_TALENT,
   ...RAPTOR_MONGOOSE_VARIANTS,
 ];
 //endregion

@@ -40,6 +40,8 @@ class GuerrillaTactics extends Analyzer {
   }
 
   statistic() {
+    return;
+    // Talent is taken for the second charge, not the bomb damage.
     return (
       <Statistic
         position={STATISTIC_ORDER.OPTIONAL(2)}
