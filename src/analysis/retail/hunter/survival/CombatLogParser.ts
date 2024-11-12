@@ -76,7 +76,6 @@ class CombatLogParser extends CoreCombatLogParser {
     raptorStrike: RaptorStrike,
     tipOfTheSpear: TipOfTheSpear,
     wildfireBomb: WildfireBomb,
-    ruthlessMarauder: RuthlessMarauder,
     lunge: Lunge,
     grenadeJuggler: GrenadeJuggler,
     vipersVenom: VipersVenom,
