@@ -39,6 +39,7 @@ import RuthlessMarauder from 'analysis/retail/hunter/survival/modules/talents/Ru
 import Lunge from './modules/talents/Lunge';
 import GrenadeJuggler from './modules/talents/GrenadeJuggler';
 import VipersVenom from './modules/talents/VipersVenom';
+import FuryOfTheEagle from './modules/talents/FuryoftheEagle';
 class CombatLogParser extends CoreCombatLogParser {
   static specModules = {
     // Core statistics
@@ -80,6 +81,7 @@ class CombatLogParser extends CoreCombatLogParser {
     lunge: Lunge,
     grenadeJuggler: GrenadeJuggler,
     vipersVenom: VipersVenom,
+    furyOfTheEagle: FuryOfTheEagle,
 
     //Shared Talents
     bindingShot: BindingShot,

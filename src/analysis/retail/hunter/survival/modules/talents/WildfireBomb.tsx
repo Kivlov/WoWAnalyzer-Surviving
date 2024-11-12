@@ -2,6 +2,7 @@ import { defineMessage } from '@lingui/macro';
 import {
   JUGGLER_CDR,
   WILDFIRE_BOMB_LEEWAY_BUFFER,
+  COVERING_FIRE_CDR,
 } from 'analysis/retail/hunter/survival/constants';
 import { formatPercentage } from 'common/format';
 import SPELLS from 'common/SPELLS';
@@ -135,12 +136,12 @@ class WildfireBomb extends Analyzer {
   }
 
   checkCooldown(spellId: number) {
-    if (this.spellUsable.cooldownRemaining(spellId) < 2000) {
-      const effectiveReductionMs = this.spellUsable.reduceCooldown(spellId, 2000);
+    if (this.spellUsable.cooldownRemaining(spellId) < COVERING_FIRE_CDR) {
+      const effectiveReductionMs = this.spellUsable.reduceCooldown(spellId, COVERING_FIRE_CDR);
       this.effectiveReductionMs += effectiveReductionMs;
-      this.wastedReductionMs += 2000 - effectiveReductionMs;
+      this.wastedReductionMs += COVERING_FIRE_CDR - effectiveReductionMs;
     } else {
-      this.effectiveReductionMs += this.spellUsable.reduceCooldown(spellId, 2000);
+      this.effectiveReductionMs += this.spellUsable.reduceCooldown(spellId, COVERING_FIRE_CDR);
     }
   }
   onDamage(event: DamageEvent) {
@@ -204,11 +205,13 @@ class WildfireBomb extends Analyzer {
           <>
             {this.averageTargetsHit.toFixed(2)} <small>average targets hit</small>
             <br />
-            {formatPercentage(this.uptimePercentage)}% <small> DoT uptime</small>
+            {formatPercentage(this.uptimePercentage, 1)}% <small> DoT uptime</small>
             <br />
-            {formatPercentage(this.untippedDamagePercentage)}% <small> average tipped hits.</small>
+            {formatPercentage(this.untippedDamagePercentage, 1)}%{' '}
+            <small> average tipped hits.</small>
             <br />
-            {formatPercentage(this.untippedCastPercentage)}% <small> average tipped casts.</small>
+            {formatPercentage(this.untippedCastPercentage, 1)}%{' '}
+            <small> average tipped casts.</small>
             <br />
             {this.casts} <small> Wildfire Bomb casts.</small>
             <br />
@@ -216,7 +219,7 @@ class WildfireBomb extends Analyzer {
             <br />
             {this.goodCast} <small> Good Wildfire Bomb casts.</small>
             <br />
-            {this.tippedDamage} <small> Tipped Wildfire Bomb Damage</small>
+            {this.tippedDamage} <small> Tipped Wildfire Bomb Damage.</small>
           </>
         </BoringSpellValueText>
       </Statistic>

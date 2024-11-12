@@ -14,9 +14,6 @@ export const WILDFIRE_BOMB_LEEWAY_BUFFER = 500;
 /** Kill Command */
 //Kill Command for Survival regenerates 15 focus
 export const SV_KILL_COMMAND_FOCUS_GAIN = 15;
-/** Serpent Sting */
-//Serpent Sting costs 20 focus
-export const SV_SERPENT_STING_COST = 20;
 //The baseduration of Serpent Sting before any haste reduction
 export const SERPENT_STING_SURVIVAL_BASE_DURATION = 12000;
 //endregion
@@ -30,16 +27,6 @@ export const RAPTOR_MONGOOSE_VARIANTS = [
   TALENTS.MONGOOSE_BITE_TALENT,
   SPELLS.MONGOOSE_BITE_TALENT_AOTE,
 ];
-export const TIPPABLE_ABILITY = [
-  TALENTS.RAPTOR_STRIKE_TALENT,
-  SPELLS.RAPTOR_STRIKE_AOTE,
-  TALENTS.MONGOOSE_BITE_TALENT,
-  SPELLS.MONGOOSE_BITE_TALENT_AOTE,
-  TALENTS.BUTCHERY_TALENT,
-  TALENTS.FLANKING_STRIKE_TALENT,
-  TALENTS.EXPLOSIVE_SHOT_TALENT,
-  TALENTS.FURY_OF_THE_EAGLE_TALENT,
-];
 /** Aspect of the Eagle */
 //This is the baseline cooldown of Aspect of the Eagle
 export const BASELINE_AOTE_CD = 90000;
@@ -47,16 +34,13 @@ export const BASELINE_AOTE_CD = 90000;
 export const FRENZIED_STRIKES_CDR = 3000;
 /** Grenade Juggler */
 export const JUGGLER_CDR = 2000;
+/** Covering Fire */
+export const COVERING_FIRE_CDR = 2000;
 /** Mongoose Bite */
 //Mongoose Bite has traveltime, so if used during Aspect of the Eagle it can have up to 700ms travel time
 export const MONGOOSE_BITE_MAX_TRAVEL_TIME = 700;
 //Mongoose Bite can have a maximum of 5 stacks
 export const MONGOOSE_BITE_MAX_STACKS = 5;
-/** Guerilla Tactics */
-//The initial hit modifier for Guerrilla Tactics talent
-export const GUERRILLA_TACTICS_INIT_HIT_MODIFIER = 0.5;
-//Spells affected by Guerrilla Tactics talent
-export const AFFECTED_BY_GUERRILLA_TACTICS = [SPELLS.WILDFIRE_BOMB_IMPACT];
 /** Tip of the Spear */
 //Tip of the Spear damage increase
 export const TIP_DAMAGE_INCREASE = 0.15;
@@ -69,12 +53,7 @@ export const BLOODSEEKER_ATTACK_SPEED_GAIN = 0.1;
 /** Explosives Expert */
 // Explosives Expert cooldown reduction
 export const EXPLOSIVES_EXPERT_CDR = [0, 1, 2];
-/** Ruthless Marauder */
-// Ruthless Marauder cooldown reduction
-export const RUTHLESS_MARAUDER_CDR = [0, 0.5, 1];
-export const RUTHLESS_MARAUDER_CDR_COOLDOWN_MS = 100;
 //endregion
-// /** Ruthless Marauder */
 
 //region Resources
 export const LIST_OF_FOCUS_SPENDERS_SV = [
