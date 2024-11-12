@@ -35,11 +35,10 @@ import TipOfTheSpear from './modules/talents/TipOfTheSpear';
 import TipOfTheSpearNormalizer from './normalizers/TipOfTheSpear';
 import WildfireBomb from './modules/talents/WildfireBomb';
 import FrenzyStrikes from './modules/talents/FrenzyStrikes';
-import RuthlessMarauder from 'analysis/retail/hunter/survival/modules/talents/RuthlessMarauder';
 import Lunge from './modules/talents/Lunge';
 import GrenadeJuggler from './modules/talents/GrenadeJuggler';
 import VipersVenom from './modules/talents/VipersVenom';
-import FuryOfTheEagle from './modules/talents/FuryoftheEagle';
+import FuryOfTheEagle from './modules/talents/FuryOfTheEagle';
 class CombatLogParser extends CoreCombatLogParser {
   static specModules = {
     // Core statistics
