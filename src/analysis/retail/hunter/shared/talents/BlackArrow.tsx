@@ -8,26 +8,30 @@ import Statistic from 'parser/ui/Statistic';
 import STATISTIC_CATEGORY from 'parser/ui/STATISTIC_CATEGORY';
 import STATISTIC_ORDER from 'parser/ui/STATISTIC_ORDER';
 
-class WailingArrow extends Analyzer {
+class BlackArrow extends Analyzer {
   damage = 0;
 
   constructor(options: Options) {
     super(options);
-    this.active = this.selectedCombatant.hasTalent(TALENTS.WAILING_ARROW_TALENT);
+    this.active = this.selectedCombatant.hasTalent(TALENTS.BLACK_ARROW_TALENT);
     if (!this.active) {
       return;
     }
     this.addEventListener(
-      Events.damage.by(SELECTED_PLAYER).spell(SPELLS.WAILING_ARROW_DAMAGE_FOCUS),
-      this.onWailingDamage,
+      Events.damage.by(SELECTED_PLAYER).spell(SPELLS.BLACK_ARROW_DAMAGE),
+      this.onBlackArrowDamage,
     );
     this.addEventListener(
-      Events.damage.by(SELECTED_PLAYER).spell(SPELLS.WAILING_ARROW_DAMAGE),
-      this.onWailingDamage,
+      Events.damage.by(SELECTED_PLAYER).spell(SPELLS.BLACK_ARROW_DAMAGE_2),
+      this.onBlackArrowDamage,
+    );
+    this.addEventListener(
+      Events.damage.by(SELECTED_PLAYER).spell(SPELLS.BLACK_ARROW_DAMAGE_3),
+      this.onBlackArrowDamage,
     );
   }
 
-  onWailingDamage(event: DamageEvent) {
+  onBlackArrowDamage(event: DamageEvent) {
     this.damage += event.amount + (event.absorbed || 0);
   }
 
@@ -38,7 +42,7 @@ class WailingArrow extends Analyzer {
         size="flexible"
         category={STATISTIC_CATEGORY.TALENTS}
       >
-        <BoringSpellValueText spell={TALENTS.WAILING_ARROW_TALENT}>
+        <BoringSpellValueText spell={TALENTS.BLACK_ARROW_TALENT}>
           <ItemDamageDone amount={this.damage} />
         </BoringSpellValueText>
       </Statistic>
@@ -46,4 +50,4 @@ class WailingArrow extends Analyzer {
   }
 }
 
-export default WailingArrow;
+export default BlackArrow;

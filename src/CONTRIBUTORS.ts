@@ -2536,7 +2536,7 @@ export const Rzial: Contributor = {
 
 export const Yellot: Contributor = {
   nickname: 'Yellot',
-  github: 'mcheung7272',
+  github: 'Mcheung7272',
   mains: [
     {
       name: 'Yellot',

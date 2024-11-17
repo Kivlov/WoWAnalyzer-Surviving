@@ -215,7 +215,16 @@ const spells = {
     name: 'Chimaera Shot',
     icon: 'ability_hunter_chimerashot2',
   },
-
+  DEATHBLOW_BUFF: {
+    id: 378770,
+    name: 'Deathblow',
+    icon: 'ability_hunter_runningshot',
+  },
+  SERPENT_STING_MM: {
+    id: 271788,
+    name: 'Serpent Sting',
+    icon: 'spell_hunter_exoticmunitions_poisoned',
+  },
   //endregion
 
   //region Survival
@@ -374,11 +383,6 @@ const spells = {
     icon: 'ability_maldraxxus_hunter',
     name: 'Death Chakram',
   },
-  DEATHBLOW_BUFF: {
-    id: 378770,
-    name: 'Deathblow',
-    icon: 'ability_hunter_runningshot',
-  },
   REJUVENATING_WIND_BUFF: {
     id: 385540,
     name: 'Rejuvenating Winds',
@@ -514,15 +518,25 @@ const spells = {
     name: 'Wailing Arrow',
     icon: 'ability_theblackarrow',
   },
-  EXPLOSIVE_SHOT_CAST: {
-    id: 212431,
-    name: 'Explosive Shot',
-    icon: 'ability_hunter_explosiveshot',
+  WAILING_ARROW_DAMAGE_FOCUS: {
+    id: 392060,
+    name: 'Wailing Arrow',
+    icon: 'ability_theblackarrow',
   },
-  EXPLOSIVE_SHOT_DAMAGE: {
-    id: 212680,
-    name: 'Explosive Shot',
-    icon: '6bf_explosive_shard',
+  BLACK_ARROW_DAMAGE: {
+    id: 466930,
+    name: 'Black Arrow',
+    icon: 'inv_ability_darkrangerhunter_blackarrow',
+  },
+  BLACK_ARROW_DAMAGE_2: {
+    id: 468037,
+    name: 'Black Arrow',
+    icon: 'inv_ability_darkrangerhunter_blackarrow',
+  },
+  BLACK_ARROW_DAMAGE_3: {
+    id: 468572,
+    name: 'Black Arrow',
+    icon: 'inv_ability_darkrangerhunter_blackarrow',
   },
   //endregion
 
@@ -603,7 +617,7 @@ const spells = {
     icon: 'ability_hunter_masterscall',
   },
   FORTITUDE_OF_THE_BEAR: {
-    id: 272679,
+    id: 392956,
     name: 'Fortitude of the Bear',
     icon: 'spell_druid_bearhug',
   },
@@ -698,6 +712,21 @@ const spells = {
     name: 'T30 4P',
     icon: 'ability_druid_ferociousbite',
   },
+
+  //TWW Lightless 2p
+  TWW_LIGHTLESS_2P_MM: {
+    id: 453648,
+    name: 'Hunter MM Lightless 2 Piece Set',
+    icon: 'trade_engineering',
+  },
+
+  //TWW Lightless 4p
+  TWW_LIGHTLESS_4P_MM: {
+    id: 453650,
+    name: 'Hunter MM Lightless 4 Piece Set',
+    icon: 'trade_engineering',
+  },
+
   //endregion
 } satisfies Record<string, Spell>;
 
