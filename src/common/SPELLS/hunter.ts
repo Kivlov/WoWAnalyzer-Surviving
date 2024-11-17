@@ -368,6 +368,11 @@ const spells = {
   //endregion
 
   //region Shared
+  EXPLOSIVE_SHOT_DAMAGE: {
+    id: 212680,
+    name: 'Explosive Shot',
+    icon: '6bf_explosive_shard',
+  },
   KILL_COMMAND_SHARED_DAMAGE: {
     id: 83381,
     name: 'Kill Command',
