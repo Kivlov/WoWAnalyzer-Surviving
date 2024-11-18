@@ -365,9 +365,24 @@ const spells = {
     name: 'Merciless Blow',
     icon: 'ability_hunter_swiftstrike',
   },
+  COORDINATED_ASSAULT_BUFF: {
+    id: 360952,
+    name: 'Coordinated Assault',
+    icon: 'inv_coordinatedassault',
+  },
+  FURIOUS_ASSAULT_BUFF_SV: {
+    id: 448814,
+    name: 'Furious Assault',
+    icon: 'spell_druid_feralchargecat',
+  },
   //endregion
 
   //region Shared
+  HOWL_OF_THE_PACK_BUFF: {
+    id: 462515,
+    name: 'Howl of the Pack',
+    icon: 'spell_hunter_lonewolf',
+  },
   EXPLOSIVE_SHOT_DAMAGE: {
     id: 212680,
     name: 'Explosive Shot',
