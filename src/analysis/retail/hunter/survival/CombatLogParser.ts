@@ -39,7 +39,11 @@ import Lunge from './modules/talents/Lunge';
 import GrenadeJuggler from './modules/talents/GrenadeJuggler';
 import VipersVenom from './modules/talents/VipersVenom';
 import FuryOfTheEagle from './modules/talents/FuryOfTheEagle';
+import FocusGraph from './modules/guide/sections/resources/FocusGraph';
+import Guide from './modules/guide/Guide';
+
 class CombatLogParser extends CoreCombatLogParser {
+  static guide = Guide;
   static specModules = {
     // Core statistics
     abilities: Abilities,
@@ -58,6 +62,9 @@ class CombatLogParser extends CoreCombatLogParser {
     focusCapTracker: FocusCapTracker,
     focus: Focus,
     survivalFocusUsage: SurvivalFocusUsage,
+
+    //Guide
+    focusGraph: FocusGraph,
 
     //Normalizers
     tipOfTheSpearNormalizer: TipOfTheSpearNormalizer,

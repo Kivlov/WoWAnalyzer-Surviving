@@ -228,6 +228,11 @@ const spells = {
   //endregion
 
   //region Survival
+  FURIOUS_ASSAULT_BUFF_SV: {
+    id: 448814,
+    name: 'Furious Assault',
+    icon: 'spell_druid_feralchargecat',
+  },
   ASPECT_OF_THE_EAGLE: {
     id: 186289,
     name: 'Aspect of the Eagle',
@@ -355,6 +360,16 @@ const spells = {
     name: 'Coordinated Assault',
     icon: 'ability_ardenweald_demonhunter',
   },
+  COORDINATED_ASSAULT_BUFF: {
+    id: 360952,
+    name: 'Coordinated Assault',
+    icon: 'inv_coordinatedassault',
+  },
+  SPEARHEAD_DAMAGE: {
+    id: 378957,
+    name: 'Spearhead',
+    icon: 'ability_hunter_spearhead',
+  },
   FURY_OF_THE_EAGLE_DAMAGE: {
     id: 203413,
     name: 'Fury of the Eagle',
@@ -364,16 +379,6 @@ const spells = {
     id: 459870,
     name: 'Merciless Blow',
     icon: 'ability_hunter_swiftstrike',
-  },
-  COORDINATED_ASSAULT_BUFF: {
-    id: 360952,
-    name: 'Coordinated Assault',
-    icon: 'inv_coordinatedassault',
-  },
-  FURIOUS_ASSAULT_BUFF_SV: {
-    id: 448814,
-    name: 'Furious Assault',
-    icon: 'spell_druid_feralchargecat',
   },
   //endregion
 

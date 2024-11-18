@@ -18,7 +18,12 @@ import BoringSpellValueText from 'parser/ui/BoringSpellValueText';
 import Statistic from 'parser/ui/Statistic';
 import STATISTIC_CATEGORY from 'parser/ui/STATISTIC_CATEGORY';
 import STATISTIC_ORDER from 'parser/ui/STATISTIC_ORDER';
-
+// Guide Imports
+import { QualitativePerformance } from 'parser/ui/QualitativePerformance';
+import CastSummaryAndBreakdown from 'interface/guide/components/CastSummaryAndBreakdown';
+import { explanationAndDataSubsection } from 'interface/guide/components/ExplanationRow';
+import { BoxRowEntry } from 'interface/guide/components/PerformanceBoxRow';
+import { BadColor, GoodColor, OkColor } from 'interface/guide';
 /**
  * Hurl a bomb at the target, exploding for (45% of Attack power) Fire damage in a cone and coating enemies in wildfire, scorching them for (90% of Attack power) Fire damage over 6 sec.
  *
@@ -36,8 +41,8 @@ class WildfireBomb extends Analyzer {
   protected enemies!: Enemies;
   protected spellUsable!: SpellUsable;
   protected globalCooldown!: GlobalCooldown;
-
-  private acceptedCastDueToCapping: boolean = false;
+  useEntries: BoxRowEntry[] = [];
+  //private acceptedCastDueToCapping: boolean = false;
   private currentGCD: number = 0;
   private casts: number = 0;
   private targetsHit: number = 0;
@@ -102,6 +107,10 @@ class WildfireBomb extends Analyzer {
     return this.goodCast / this.casts;
   }
   onCast(event: CastEvent) {
+    let value: QualitativePerformance = QualitativePerformance.Good;
+    let castAtCap = false;
+    let perfExplanation: React.ReactNode = undefined;
+    const targetName = this.owner.getTargetName(event);
     this.casts += 1;
     this.currentGCD = this.globalCooldown.getGlobalCooldownDuration(event.ability.guid);
     if (
@@ -109,7 +118,7 @@ class WildfireBomb extends Analyzer {
       this.spellUsable.cooldownRemaining(TALENTS.WILDFIRE_BOMB_TALENT.id) <
         WILDFIRE_BOMB_LEEWAY_BUFFER + this.currentGCD
     ) {
-      this.acceptedCastDueToCapping = true;
+      castAtCap = true;
     }
 
     // Pack Leader - Covering Fire Talent Cooldown Reduction for Butchery
@@ -122,17 +131,67 @@ class WildfireBomb extends Analyzer {
     }
 
     // Good or Bad Cast Checking Tip, CA is almost up, or capped are good casts of bomb.
-    if (this.selectedCombatant.hasOwnBuff(SPELLS.TIP_OF_THE_SPEAR_CAST.id)) {
+    if (castAtCap && this.selectedCombatant.hasOwnBuff(SPELLS.TIP_OF_THE_SPEAR_CAST.id)) {
+      value = QualitativePerformance.Ok;
+      perfExplanation = (
+        <h5 style={{ color: OkColor }}>
+          ACCEPTABLE. Casted at maximum stacks with a Tip. Do not delay bomb for a tip if it means
+          it will cap!
+          <br />
+        </h5>
+      );
+      this.goodCast += 1;
+    } else if (castAtCap) {
+      value = QualitativePerformance.Ok;
+      perfExplanation = (
+        <h5 style={{ color: OkColor }}>
+          ACCEPTABLE. Casted at maximum stacks. Try to cast bomb before it caps.
+          <br />
+        </h5>
+      );
+      this.goodCast += 1;
+    } else if (this.selectedCombatant.hasOwnBuff(SPELLS.TIP_OF_THE_SPEAR_CAST.id)) {
       this.tippedCast += 1;
       this.goodCast += 1;
+      value = QualitativePerformance.Good;
+      perfExplanation = (
+        <h5 style={{ color: GoodColor }}>
+          Tipped Cast.
+          <br />
+        </h5>
+      );
     } else if (
       !this.spellUsable.isOnCooldown(TALENTS.COORDINATED_ASSAULT_TALENT.id) ||
       this.spellUsable.cooldownRemaining(TALENTS.COORDINATED_ASSAULT_TALENT.id) < 4000
     ) {
       this.goodCast += 1;
-    } else if (this.acceptedCastDueToCapping) {
-      this.goodCast += 1;
+      value = QualitativePerformance.Good;
+      perfExplanation = (
+        <h5 style={{ color: GoodColor }}>
+          ACCEPTABLE. Casted Prior to Coordinated Assault.
+          <br />
+        </h5>
+      );
+    } else {
+      value = QualitativePerformance.Fail;
+      perfExplanation = (
+        <h5 style={{ color: BadColor }}>
+          BAD. Cast without a Tip of the Spear or other APL conditions being true!
+          <br />
+        </h5>
+      );
     }
+    const tooltip = (
+      <>
+        {perfExplanation}@ <strong>{this.owner.formatTimestamp(event.timestamp)}</strong> targetting{' '}
+        <strong>{targetName || 'unknown'}</strong>
+        <br />
+      </>
+    );
+    this.useEntries.push({
+      value,
+      tooltip,
+    });
   }
 
   checkCooldown(spellId: number) {
@@ -145,18 +204,24 @@ class WildfireBomb extends Analyzer {
     }
   }
   onDamage(event: DamageEvent) {
+    /* TODO: Use CastLinkNormalizer to link damage to cast.
+   Then count number of *good* damage instances because bomb travel time means you can consume and make bomb tipless or tip bomb while it's mid air.
+   This leaves a different statistic for good casts on fights like Bloodbound because you may want to bomb THEN kill command on large bosses so that if you go
+   KC -> Bomb -> raptor that you don't tip the raptor so you'd go bomb->kc -> raptor and the bomb would hit as the KC applies tip and then consumes it right away.
+    */
     if (this.casts === 0) {
       this.casts += 1;
       this.spellUsable.beginCooldown(event, TALENTS.WILDFIRE_BOMB_TALENT.id);
     }
     this.targetsHit += 1;
-    const enemy = this.enemies.getEntity(event);
+    /* TODO: Logic to track number of enemies hit. Saving this as the current reference bomb had for targets hit. */
+    //const enemy = this.enemies.getEntity(event);
     if (this.selectedCombatant.hasOwnBuff(SPELLS.TIP_OF_THE_SPEAR_CAST.id)) {
       this.tippedDamage += 1;
     }
-    if (this.acceptedCastDueToCapping || !enemy) {
-      return;
-    }
+    // if (this.acceptedCastDueToCapping || !enemy) {
+    //   return;
+    // }
   }
 
   suggestions(when: When) {
@@ -194,6 +259,37 @@ class WildfireBomb extends Analyzer {
     );
   }
 
+  get guideSubsection(): JSX.Element {
+    const explanation = (
+      <p>
+        <strong>
+          <SpellLink spell={TALENTS.WILDFIRE_BOMB_TALENT} />
+        </strong>{' '}
+        should be kept off maximum charges and always be cast with{' '}
+        <SpellLink spell={SPELLS.TIP_OF_THE_SPEAR_CAST.id} />. It can go untipped if any of:
+        <br></br>
+        1. You are capped on bomb charges. <br></br>
+        2. Lunar Storm is ready <br></br>
+        3. You are about to press Coordinated Assault and have{' '}
+        <SpellLink spell={TALENTS.BOMBARDIER_TALENT} /> talented.<br></br>
+        4. You are about to press Butchery and the cooldown reduction from Frenzied Strikes would
+        overcap bomb.
+      </p>
+    );
+
+    const data = (
+      <div>
+        <CastSummaryAndBreakdown
+          spell={TALENTS.WILDFIRE_BOMB_TALENT}
+          castEntries={this.useEntries}
+          badExtraExplanation={<>or an expired proc</>}
+          usesInsteadOfCasts
+        />
+      </div>
+    );
+
+    return explanationAndDataSubsection(explanation, data);
+  }
   statistic() {
     return (
       <Statistic
