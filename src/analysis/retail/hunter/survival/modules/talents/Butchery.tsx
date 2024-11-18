@@ -12,7 +12,8 @@ import ItemDamageDone from 'parser/ui/ItemDamageDone';
 import Statistic from 'parser/ui/Statistic';
 import STATISTIC_ORDER from 'parser/ui/STATISTIC_ORDER';
 import STATISTIC_CATEGORY from 'parser/ui/STATISTIC_CATEGORY';
-
+import { explanationAndDataSubsection } from 'interface/guide/components/ExplanationRow';
+import CastEfficiencyPanel from 'interface/guide/components/CastEfficiencyPanel';
 /**
  * Attack all nearby enemies in a flurry of strikes, inflicting Physical damage to each. Deals reduced damage beyond 5 targets.
  *
@@ -117,6 +118,27 @@ class Butchery extends Analyzer {
         </BoringSpellValueText>
       </Statistic>
     );
+  }
+  get guideSubsection() {
+    const explanation = (
+      <p>
+        <strong>
+          <SpellLink spell={TALENTS.BUTCHERY_TALENT} />
+        </strong>{' '}
+        is an AoE ability when combined with <SpellLink spell={TALENTS.FRENZY_STRIKES_TALENT} /> to
+        reduce the cooldown of <SpellLink spell={TALENTS.WILDFIRE_BOMB_TALENT} />
+        and to apply a powerful bleed with <SpellLink spell={TALENTS.MERCILESS_BLOW_TALENT} /> turns
+        it into a powerful single target ability as well.{' '}
+        <SpellLink spell={TALENTS.BUTCHERY_TALENT} /> should be kept on cooldown at all times to
+        maximise the cooldown reduction and bleed uptime.{' '}
+        <strong>Do not delay casting butchery to buff it with </strong>{' '}
+        <SpellLink spell={TALENTS.TIP_OF_THE_SPEAR_TALENT} />.
+      </p>
+    );
+
+    const data = <CastEfficiencyPanel spell={TALENTS.BUTCHERY_TALENT} useThresholds />;
+
+    return explanationAndDataSubsection(explanation, data);
   }
 }
 

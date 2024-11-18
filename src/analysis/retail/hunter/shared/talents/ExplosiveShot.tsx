@@ -8,7 +8,9 @@ import ItemDamageDone from 'parser/ui/ItemDamageDone';
 import Statistic from 'parser/ui/Statistic';
 import STATISTIC_CATEGORY from 'parser/ui/STATISTIC_CATEGORY';
 import STATISTIC_ORDER from 'parser/ui/STATISTIC_ORDER';
-
+import { explanationAndDataSubsection } from 'interface/guide/components/ExplanationRow';
+import CastEfficiencyPanel from 'interface/guide/components/CastEfficiencyPanel';
+import SpellLink from 'interface/SpellLink';
 /**
  * Cost: 20 focus, 40 yd range. 30 Second cooldown.
  * Fires an explosive shot at your target. After 3 sec, the shot will explode, dealing (291% of Attack power) Fire damage to all enemies within 8 yds. Deals reduced damage beyond 5 targets.
@@ -62,6 +64,25 @@ class ExplosiveShot extends Analyzer {
         </BoringSpellValueText>
       </Statistic>
     );
+  }
+  get guideSubsectionSV() {
+    const explanation = (
+      <p>
+        <strong>
+          <SpellLink spell={TALENTS.EXPLOSIVE_SHOT_TALENT} />
+        </strong>{' '}
+        deals damage after 3 second delay <SpellLink spell={TALENTS.TIP_OF_THE_SPEAR_TALENT} />.
+        Always use it on cooldown. You may spend a{' '}
+        <SpellLink spell={TALENTS.TIP_OF_THE_SPEAR_TALENT} /> on a cast but do not delay a cast
+        specifically to tip it. Cast prior to using{' '}
+        <SpellLink spell={TALENTS.COORDINATED_ASSAULT_TALENT} /> as Explosive Shot does not snapshot
+        it's damage on cast.
+      </p>
+    );
+
+    const data = <CastEfficiencyPanel spell={TALENTS.EXPLOSIVE_SHOT_TALENT} useThresholds />;
+
+    return explanationAndDataSubsection(explanation, data);
   }
 }
 
