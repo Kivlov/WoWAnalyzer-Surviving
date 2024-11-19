@@ -41,6 +41,7 @@ import VipersVenom from './modules/talents/VipersVenom';
 import FuryOfTheEagle from './modules/talents/FuryOfTheEagle';
 import FocusGraph from './modules/guide/sections/resources/FocusGraph';
 import Guide from './modules/guide/Guide';
+import SurvivalOfTheFittest from '../shared/talents/SurvivalOfTheFittest';
 
 class CombatLogParser extends CoreCombatLogParser {
   static guide = Guide;
@@ -98,6 +99,7 @@ class CombatLogParser extends CoreCombatLogParser {
     rejuvenatingWind: RejuvenatingWind,
     trailblazer: Trailblazer,
     tranquilizingShot: TranquilizingShot,
+    SurvivalOfTheFittest: SurvivalOfTheFittest,
 
     // Survival's throughput benefit isn't as big as for other classes
     arcaneTorrent: [ArcaneTorrent, { castEfficiency: 0.5 }] as const,

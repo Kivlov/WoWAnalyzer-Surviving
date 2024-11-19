@@ -39,7 +39,6 @@ class KillShot extends ExecuteHelper {
     this.active = !this.selectedCombatant.hasTalent(TALENTS.BLACK_ARROW_TALENT);
     this.selectedCombatant.hasTalent(TALENTS.KILL_SHOT_SHARED_TALENT) ||
       this.selectedCombatant.hasTalent(TALENTS.KILL_SHOT_SURVIVAL_TALENT);
-
     const ctor = this.constructor as typeof ExecuteHelper;
     ctor.executeSpells.push(this.activeKillShotSpell);
 
@@ -54,14 +53,9 @@ class KillShot extends ExecuteHelper {
       castEfficiency: {
         suggestion: true,
         recommendedEfficiency: 0.85,
-        maxCasts: () => this.maxCasts,
+        maxCasts: () => this.totalCasts,
       },
     });
-  }
-
-  adjustMaxCasts() {
-    this.maxCasts += Math.ceil(this.totalExecuteDuration / 10000);
-    this.maxCasts += this.singleExecuteEnablerApplications;
   }
 
   statistic() {
