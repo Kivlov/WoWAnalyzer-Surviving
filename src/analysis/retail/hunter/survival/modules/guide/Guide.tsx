@@ -4,14 +4,16 @@ import CombatLogParser from '../../CombatLogParser';
 import ResourceUseSection from './sections/resources/ResourceUseSection';
 import RotationSection from './sections/rotation/RotationSection';
 import ActiveTime from './sections/rotation/ActiveTime';
-
+import Cooldown from './sections/rotation/Cooldown';
+import MajorDefensives from './sections/defensives/DamageTaken';
 export default function Guide({ modules, events, info }: GuideProps<typeof CombatLogParser>) {
   return (
     <>
       <ActiveTime modules={modules} events={events} info={info} />
       <ResourceUseSection {...modules} />
+      <Cooldown modules={modules} events={events} info={info} />
       <RotationSection modules={modules} events={events} info={info} />
-
+      <MajorDefensives />
       <PreparationSection />
     </>
   );

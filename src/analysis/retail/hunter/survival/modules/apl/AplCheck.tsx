@@ -27,25 +27,19 @@ export const apl = build([
     spell: TALENTS.RAPTOR_STRIKE_TALENT,
     condition: cnd.describe(
       cnd.or(
-        cnd.debuffMissing(SPELLS.SERPENT_STING_SURVIVAL),
+        //cnd.debuffMissing(SPELLS.SERPENT_STING_SURVIVAL,),
         cnd.buffRemaining(SPELLS.HOWL_OF_THE_PACK_BUFF, 8, { atMost: 1400 }, false),
       ),
       (tense) => {
-        const isSerpentStingMissing = cnd.debuffMissing(SPELLS.SERPENT_STING_SURVIVAL, {
-          duration: 12000,
-          timeRemaining: 3600,
-          pandemicCap: 0.3,
-        });
-        const isHowlOfThePackFading = cnd.buffRemaining(
-          SPELLS.HOWL_OF_THE_PACK_BUFF,
-          8,
-          { atMost: 1400 },
-          false,
+        //const isSerpentStingMissing = cnd.debuffMissing(SPELLS.SERPENT_STING_SURVIVAL);
+        const isHowlOfThePackFading = cnd.not(
+          cnd.buffRemaining(SPELLS.HOWL_OF_THE_PACK_BUFF, 8, { atLeast: 1400 }, false),
         );
 
-        if (isSerpentStingMissing) {
-          return <>Serpent Sting is missing</>;
-        } else if (isHowlOfThePackFading) {
+        // if (isSerpentStingMissing) {
+        //   return <>Serpent Sting is missing</>;
+        // } else
+        if (isHowlOfThePackFading) {
           return <>Howl of the Pack is about to fade</>;
         } else {
           return <>Both Howl is fading and Sting is missing</>;
@@ -149,19 +143,31 @@ export const apl = build([
   {
     spell: TALENTS.KILL_COMMAND_SURVIVAL_TALENT,
     condition: cnd.describe(
-      cnd.or(
-        //cnd.not(cnd.hasResource(RESOURCE_TYPES.FOCUS, {atLeast:77})),
+      cnd.and(
         cnd.hasResource(RESOURCE_TYPES.FOCUS, { atMost: 77 }),
-        cnd.and(
-          cnd.not(cnd.buffStacks(SPELLS.TIP_OF_THE_SPEAR_CAST, { atLeast: 1 })),
-          cnd.not(cnd.buffPresent(TALENTS.COORDINATED_ASSAULT_TALENT)),
+        cnd.or(
+          cnd.and(
+            cnd.hasTalent(TALENTS.RELENTLESS_PRIMAL_FEROCITY_TALENT),
+            cnd.buffMissing(SPELLS.COORDINATED_ASSAULT_BUFF),
+          ),
+          cnd.or(
+            cnd.and(
+              cnd.hasTalent(TALENTS.RELENTLESS_PRIMAL_FEROCITY_TALENT),
+              cnd.buffPresent(SPELLS.COORDINATED_ASSAULT_BUFF),
+              cnd.buffMissing(SPELLS.TIP_OF_THE_SPEAR_CAST),
+            ),
+            cnd.hasResource(RESOURCE_TYPES.FOCUS, { atMost: 30 }),
+          ),
         ),
       ),
 
+      //kill_command,target_if=min:bloodseeker.remains,if=focus+cast_regen<focus.max&(!buff.relentless_primal_ferocity.up|(buff.relentless_primal_ferocity.up&buff.tip_of_the_spear.stack<1|focus<30))
       (tense) => (
         <>
-          you {tenseAlt(tense, <>have</>, <>had</>)} at most 77
-          <SpellLink spell={RESOURCE_TYPES.FOCUS} />
+          you {tenseAlt(tense, <>have</>, <>had</>)} at most 77 focus and don't have
+          <SpellLink spell={TALENTS.RELENTLESS_PRIMAL_FEROCITY_TALENT} /> up OR you have
+          <SpellLink spell={TALENTS.RELENTLESS_PRIMAL_FEROCITY_TALENT} /> with either no Tip stacks
+          or less than 30 focus.
         </>
       ),
     ),
