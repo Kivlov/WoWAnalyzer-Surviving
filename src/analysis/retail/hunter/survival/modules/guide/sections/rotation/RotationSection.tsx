@@ -2,8 +2,9 @@ import { t, Trans } from '@lingui/macro';
 import { GuideProps, Section, SubSection } from 'interface/guide';
 import CombatLogParser from 'analysis/retail/hunter/survival/CombatLogParser';
 import TALENTS from 'common/TALENTS/hunter';
-import * as AplCheck from 'analysis/retail/hunter/survival/modules/apl/AplCheck';
-import { AplSectionData } from 'interface/guide/components/Apl';
+//Commented out because they will be reactived relatively quick.
+//import * as AplCheck from 'analysis/retail/hunter/survival/modules/apl/AplCheck';
+//import { AplSectionData } from 'interface/guide/components/Apl';
 export default function RotationSection({
   modules,
   events,
@@ -45,10 +46,13 @@ export default function RotationSection({
         {modules.explosiveShot.guideSubsectionSV}
         {modules.killShot.guideSubsectionSV}
       </SubSection>
-
-      <SubSection title="APL Analysis">
-        <AplSectionData checker={AplCheck.checkApl} apl={AplCheck.apl} />
-      </SubSection>
     </Section>
   );
 }
+/*
+TODO: add back in after rotational cooldowns subsection. Current problem is it's not counting Focus properly for hasResource.
+Recommending to Raptor when you're <77 focus and you pushed KC instead.
+<SubSection title="APL Analysis">
+        <AplSectionData checker={AplCheck.checkApl} apl={AplCheck.apl} />
+      </SubSection>
+*/
