@@ -1,10 +1,9 @@
-import { defineMessage } from '@lingui/macro';
 import TALENTS from 'common/TALENTS/hunter';
 import SPELLS from 'common/SPELLS';
 import { SpellLink } from 'interface';
 import Analyzer, { Options, SELECTED_PLAYER } from 'parser/core/Analyzer';
-import Events, { DamageEvent } from 'parser/core/Events';
-import { ThresholdStyle, When } from 'parser/core/ParseResults';
+import Events, { DamageEvent, CastEvent } from 'parser/core/Events';
+import { ThresholdStyle } from 'parser/core/ParseResults';
 import SpellUsable from 'parser/shared/modules/SpellUsable';
 import AverageTargetsHit from 'parser/ui/AverageTargetsHit';
 import BoringSpellValueText from 'parser/ui/BoringSpellValueText';
@@ -12,7 +11,12 @@ import ItemDamageDone from 'parser/ui/ItemDamageDone';
 import Statistic from 'parser/ui/Statistic';
 import STATISTIC_ORDER from 'parser/ui/STATISTIC_ORDER';
 import STATISTIC_CATEGORY from 'parser/ui/STATISTIC_CATEGORY';
-
+//Guide
+import { QualitativePerformance } from 'parser/ui/QualitativePerformance';
+import CastSummaryAndBreakdown from 'interface/guide/components/CastSummaryAndBreakdown';
+import { explanationAndDataSubsection } from 'interface/guide/components/ExplanationRow';
+import { BoxRowEntry } from 'interface/guide/components/PerformanceBoxRow';
+import { BadColor, GoodColor } from 'interface/guide';
 /**
  * Attack all nearby enemies in cone in front of you in a flurry of strikes, inflicting Physical damage to each. Deals reduced damage beyond 5 targets.
  *
@@ -26,11 +30,10 @@ class FuryOfTheEagle extends Analyzer {
   };
 
   protected spellUsable!: SpellUsable;
-
+  useEntries: BoxRowEntry[] = [];
   private targetsHit: number = 0;
   private casts: number = 0;
   private damage: number = 0;
-
   constructor(options: Options) {
     super(options);
 
@@ -60,34 +63,44 @@ class FuryOfTheEagle extends Analyzer {
     };
   }
 
-  onCast() {
+  onCast(event: CastEvent) {
+    const targetName = this.owner.getTargetName(event);
+    let value: QualitativePerformance = QualitativePerformance.Good;
+    let perfExplanation: React.ReactNode = undefined;
     this.casts += 1;
+    if (this.selectedCombatant.hasOwnBuff(SPELLS.TIP_OF_THE_SPEAR_CAST.id)) {
+      value = QualitativePerformance.Good;
+      perfExplanation = (
+        <h5 style={{ color: GoodColor }}>
+          GOOD!
+          <br />
+        </h5>
+      );
+    } else {
+      value = QualitativePerformance.Fail;
+      perfExplanation = (
+        <h5 style={{ color: BadColor }}>
+          Bad! Always cast with Tip!
+          <br />
+        </h5>
+      );
+    }
+    const tooltip = (
+      <>
+        {perfExplanation}@ <strong>{this.owner.formatTimestamp(event.timestamp)}</strong> targetting{' '}
+        <strong>{targetName || 'unknown'}</strong>
+        <br />
+      </>
+    );
+    this.useEntries.push({
+      value,
+      tooltip,
+    });
   }
 
   onDamage(event: DamageEvent) {
     this.targetsHit += 1;
     this.damage += event.amount + (event.absorbed || 0);
-  }
-
-  suggestions(when: When) {
-    when(this.avgTargetsHitThreshold).addSuggestion(
-      (suggest, actual, recommended) =>
-        suggest(
-          <>
-            You should aim to hit the target with{' '}
-            <SpellLink spell={TALENTS.FURY_OF_THE_EAGLE_TALENT} />. Butchery does not require you to
-            be in range to cast and so it can miss.
-          </>,
-        )
-          .icon(TALENTS.BUTCHERY_TALENT.icon)
-          .actual(
-            defineMessage({
-              id: 'hunter.survival.suggestions.butcheryCarve.averageTargets',
-              message: `${actual} average targets hit per cast`,
-            }),
-          )
-          .recommended('Not missing the target is recommended'), //`>=${recommended} is recommended`),
-    );
   }
 
   statistic() {
@@ -104,6 +117,29 @@ class FuryOfTheEagle extends Analyzer {
         </BoringSpellValueText>
       </Statistic>
     );
+  }
+  get guideSubsection(): JSX.Element {
+    const explanation = (
+      <p>
+        <strong>
+          <SpellLink spell={TALENTS.FURY_OF_THE_EAGLE_TALENT} />
+        </strong>{' '}
+        should always be cast with <SpellLink spell={SPELLS.TIP_OF_THE_SPEAR_CAST.id} />. Holding
+        Fury of the Eagle in Single Target is acceptable if AoE damage is imminent.
+      </p>
+    );
+
+    const data = (
+      <div>
+        <CastSummaryAndBreakdown
+          spell={TALENTS.FURY_OF_THE_EAGLE_TALENT}
+          castEntries={this.useEntries}
+          usesInsteadOfCasts
+        />
+      </div>
+    );
+
+    return explanationAndDataSubsection(explanation, data);
   }
 }
 
