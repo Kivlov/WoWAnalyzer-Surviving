@@ -43,6 +43,7 @@ import FocusGraph from './modules/guide/sections/resources/FocusGraph';
 import Guide from './modules/guide/Guide';
 import SurvivalOfTheFittest from '../shared/talents/SurvivalOfTheFittest';
 import ExhilarationTiming from './modules/guide/sections/defensives/Exhiliration';
+import HowlOfThePack from '../shared/HowlOfThePack';
 
 class CombatLogParser extends CoreCombatLogParser {
   static guide = Guide;
@@ -90,6 +91,7 @@ class CombatLogParser extends CoreCombatLogParser {
     grenadeJuggler: GrenadeJuggler,
     vipersVenom: VipersVenom,
     furyOfTheEagle: FuryOfTheEagle,
+    howlOfThePack: HowlOfThePack,
 
     //Shared Talents
     bindingShot: BindingShot,
