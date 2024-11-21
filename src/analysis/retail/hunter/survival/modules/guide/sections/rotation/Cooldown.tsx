@@ -1,4 +1,4 @@
-import { GuideProps, Section } from 'interface/guide';
+import { GuideProps, Section, SubSection } from 'interface/guide';
 
 import { useAnalyzer } from 'interface/guide';
 import CastEfficiency from 'parser/shared/modules/CastEfficiency';
@@ -46,6 +46,34 @@ export default function CooldownSection({ modules, info }: GuideProps<typeof Com
           gapHighlightMode={GapHighlight.FullCooldown}
         />
       )}
+
+      <SubSection title="Trinket Cooldowns">
+        {info.combatant.hasTrinket(133282) && (
+          <>
+            <p>
+              Skardyn's Grace should always be used with{' '}
+              <SpellLink spell={TALENTS.COORDINATED_ASSAULT_TALENT} /> when
+              <strong> NOT</strong> using <SpellLink spell={TALENTS.SENTINEL_WATCH_TALENT} />. If
+              using
+              <SpellLink spell={TALENTS.SENTINEL_WATCH_TALENT} /> then use them together when both
+              are available, but do not delay one for the other if it will cost you casts later.
+            </p>
+            <CastEfficiencyBar spellId={92099} gapHighlightMode={GapHighlight.FullCooldown} />
+          </>
+        )}
+        {info.combatant.hasTrinket(212454) && (
+          <>
+            <p>
+              Queen's Mandate should be used with 3 stacks of{' '}
+              <SpellLink spell={TALENTS.HOWL_OF_THE_PACK_TALENT} /> when playing Pack Leader, or
+              when the target us under the 10% Damage from{' '}
+              <SpellLink spell={TALENTS.LUNAR_STORM_TALENT} />. The last cast in a fight should
+              occur as late as possible to maximise the execute damage.
+            </p>
+            <CastEfficiencyBar spellId={443124} gapHighlightMode={GapHighlight.FullCooldown} />
+          </>
+        )}
+      </SubSection>
     </Section>
   );
 }
