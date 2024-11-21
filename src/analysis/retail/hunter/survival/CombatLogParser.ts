@@ -42,6 +42,7 @@ import FuryOfTheEagle from './modules/talents/FuryOfTheEagle';
 import FocusGraph from './modules/guide/sections/resources/FocusGraph';
 import Guide from './modules/guide/Guide';
 import SurvivalOfTheFittest from '../shared/talents/SurvivalOfTheFittest';
+import ExhilarationTiming from './modules/guide/sections/defensives/Exhiliration';
 
 class CombatLogParser extends CoreCombatLogParser {
   static guide = Guide;
@@ -66,6 +67,7 @@ class CombatLogParser extends CoreCombatLogParser {
 
     //Guide
     focusGraph: FocusGraph,
+    exhilarationTiming: ExhilarationTiming,
 
     //Normalizers
     tipOfTheSpearNormalizer: TipOfTheSpearNormalizer,
