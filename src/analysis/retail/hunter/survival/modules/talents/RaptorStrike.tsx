@@ -24,9 +24,6 @@ class RaptorStrike extends Analyzer {
   get guideSubsection(): JSX.Element {
     const explanation = (
       <p>
-        <strong>
-          <SpellLink spell={TALENTS.RAPTOR_STRIKE_TALENT} />
-        </strong>{' '}
         At it's core, Survival is a spec whose rotation revolves around generating Focus with Kill
         Command and spending it with <SpellLink spell={TALENTS.RAPTOR_STRIKE_TALENT} />
         or <SpellLink spell={TALENTS.MONGOOSE_BITE_TALENT} />. If you cannot generate focus without
