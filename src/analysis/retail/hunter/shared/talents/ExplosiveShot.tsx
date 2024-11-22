@@ -71,12 +71,11 @@ class ExplosiveShot extends Analyzer {
         <strong>
           <SpellLink spell={TALENTS.EXPLOSIVE_SHOT_TALENT} />
         </strong>{' '}
-        deals damage after 3 second delay <SpellLink spell={TALENTS.TIP_OF_THE_SPEAR_TALENT} />.
-        Always use it on cooldown. You may spend a{' '}
+        deals damage after 3 second delay Always use it on cooldown. You may spend a{' '}
         <SpellLink spell={TALENTS.TIP_OF_THE_SPEAR_TALENT} /> on a cast but do not delay a cast
         specifically to tip it. Cast prior to using{' '}
         <SpellLink spell={TALENTS.COORDINATED_ASSAULT_TALENT} /> as Explosive Shot does not snapshot
-        it's damage on cast.
+        its damage on cast.
       </p>
     );
 

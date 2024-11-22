@@ -7,7 +7,8 @@ import { GapHighlight } from 'parser/ui/CooldownBar';
 import CombatLogParser from 'analysis/retail/hunter/survival/CombatLogParser';
 import { SpellLink } from 'interface';
 import TALENTS from 'common/TALENTS/hunter';
-
+import ITEMS from 'common/ITEMS';
+import SPELLS from 'common/SPELLS';
 export default function CooldownSection({ modules, info }: GuideProps<typeof CombatLogParser>) {
   const castEfficiency = useAnalyzer(CastEfficiency);
   if (!info || !castEfficiency) {
@@ -48,7 +49,7 @@ export default function CooldownSection({ modules, info }: GuideProps<typeof Com
       )}
 
       <SubSection title="Trinket Cooldowns">
-        {info.combatant.hasTrinket(133282) && (
+        {info.combatant.hasTrinket(ITEMS.SKARDYNS_GRACE.id) && (
           <>
             <p>
               Skardyn's Grace should always be used with{' '}
@@ -58,10 +59,13 @@ export default function CooldownSection({ modules, info }: GuideProps<typeof Com
               <SpellLink spell={TALENTS.SENTINEL_WATCH_TALENT} /> then use them together when both
               are available, but do not delay one for the other if it will cost you casts later.
             </p>
-            <CastEfficiencyBar spellId={92099} gapHighlightMode={GapHighlight.FullCooldown} />
+            <CastEfficiencyBar
+              spellId={SPELLS.SPEED_OF_THOUGHT.id}
+              gapHighlightMode={GapHighlight.FullCooldown}
+            />
           </>
         )}
-        {info.combatant.hasTrinket(212454) && (
+        {info.combatant.hasTrinket(ITEMS.MAD_QUEENS_MANDATE.id) && (
           <>
             <p>
               Queen's Mandate should be used with 3 stacks of{' '}
@@ -70,7 +74,10 @@ export default function CooldownSection({ modules, info }: GuideProps<typeof Com
               <SpellLink spell={TALENTS.LUNAR_STORM_TALENT} />. The last cast in a fight should
               occur as late as possible to maximise the execute damage.
             </p>
-            <CastEfficiencyBar spellId={443124} gapHighlightMode={GapHighlight.FullCooldown} />
+            <CastEfficiencyBar
+              spellId={SPELLS.ABYSSAL_GLUTTONY.id}
+              gapHighlightMode={GapHighlight.FullCooldown}
+            />
           </>
         )}
       </SubSection>
