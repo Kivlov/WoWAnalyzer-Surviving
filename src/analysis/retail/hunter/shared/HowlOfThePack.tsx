@@ -1,6 +1,6 @@
 import { formatDuration, formatPercentage } from 'common/format';
 import SPELLS from 'common/SPELLS';
-import HasteIcon from 'interface/icons/Haste';
+import CriticalStrike from 'interface/icons/CriticalStrike';
 import Analyzer, { Options, SELECTED_PLAYER } from 'parser/core/Analyzer';
 import Events, {
   EventType,
@@ -42,7 +42,7 @@ class HowlOfThePack extends Analyzer {
     return avgStacks;
   }
 
-  get averageHaste() {
+  get averageCritDamage() {
     return this.averageStacks * this.critDamagePerStack * 100;
   }
 
@@ -146,7 +146,7 @@ class HowlOfThePack extends Analyzer {
             <TooltipElement
               content={`This is the average number of stacks you had over the course of the fight, counting periods where you didn't have the buff as zero stacks.`}
             >
-              <span style={{ color: HOWL_COLOR }}>
+              <span style={{ color: HOWL_BG_COLOR }}>
                 {this.averageStacks.toFixed(1)} <small>avg stacks</small>
               </span>
             </TooltipElement>
@@ -178,7 +178,7 @@ class HowlOfThePack extends Analyzer {
             <table className="table table-condensed">
               <thead>
                 <tr>
-                  <th>Haste-Bonus</th>
+                  <th>Crit DamageBonus</th>
                   <th>Time (s)</th>
                   <th>Time (%)</th>
                 </tr>
@@ -200,7 +200,8 @@ class HowlOfThePack extends Analyzer {
       >
         <TalentSpellText talent={TALENTS.HOWL_OF_THE_PACK_TALENT}>
           <>
-            <HasteIcon /> {this.averageHaste.toFixed(2)} % <small>average haste gained</small>
+            <CriticalStrike /> {this.averageCritDamage.toFixed(2)} %{' '}
+            <small>average Crit Damage gained</small>
           </>
         </TalentSpellText>
       </Statistic>
