@@ -267,13 +267,18 @@ class WildfireBomb extends Analyzer {
         </strong>{' '}
         should be kept off maximum charges and always be cast with{' '}
         <SpellLink spell={SPELLS.TIP_OF_THE_SPEAR_CAST.id} />. It can go untipped if any of:
-        <br></br>
-        1. You are capped on bomb charges. <br></br>
-        2. Lunar Storm is ready <br></br>
-        3. You are about to press Coordinated Assault and have{' '}
-        <SpellLink spell={TALENTS.BOMBARDIER_TALENT} /> talented.<br></br>
-        4. You are about to press Butchery and the cooldown reduction from Frenzied Strikes would
-        overcap bomb.
+        <ol>
+          <li>You are capped on bomb charges. </li>
+          <li>Lunar Storm is ready </li>
+          <li>
+            You are about to press Coordinated Assault and have{' '}
+            <SpellLink spell={TALENTS.BOMBARDIER_TALENT} /> talented.{' '}
+          </li>
+          <li>
+            You are about to press Butchery and the cooldown reduction from Frenzied Strikes would
+            overcap bomb.{' '}
+          </li>
+        </ol>
       </p>
     );
 
