@@ -20,31 +20,18 @@ export const apl = build([
         cnd.buffMissing(SPELLS.TIP_OF_THE_SPEAR_CAST),
         cnd.buffPresent(SPELLS.COORDINATED_ASSAULT_BUFF),
       ),
-      (tense) => <>you have 0 tip stacks & Relentless Primal Ferocity is active</>,
+      (tense) => (
+        <>
+          you {tenseAlt(tense, 'have', 'had')} 0 tip stacks & Relentless Primal Ferocity is active
+        </>
+      ),
     ),
   },
   {
     spell: TALENTS.RAPTOR_STRIKE_TALENT,
     condition: cnd.describe(
-      cnd.or(
-        //cnd.debuffMissing(SPELLS.SERPENT_STING_SURVIVAL,),
-        cnd.buffRemaining(SPELLS.HOWL_OF_THE_PACK_BUFF, 8, { atMost: 1400 }, false),
-      ),
-      (tense) => {
-        //const isSerpentStingMissing = cnd.debuffMissing(SPELLS.SERPENT_STING_SURVIVAL);
-        const isHowlOfThePackFading = cnd.not(
-          cnd.buffRemaining(SPELLS.HOWL_OF_THE_PACK_BUFF, 8, { atLeast: 1400 }, false),
-        );
-
-        // if (isSerpentStingMissing) {
-        //   return <>Serpent Sting is missing</>;
-        // } else
-        if (isHowlOfThePackFading) {
-          return <>Howl of the Pack is about to fade</>;
-        } else {
-          return <>Both Howl is fading and Sting is missing</>;
-        }
-      },
+      cnd.buffRemaining(SPELLS.HOWL_OF_THE_PACK_BUFF, 8000, { atMost: 1400 }, false),
+      (tense) => <>Howl of the Pack is about to fade</>,
     ),
   },
 
@@ -55,10 +42,7 @@ export const apl = build([
       (tense) => <>you {tenseAlt(tense, <>have</>, <>had</>)} 1 or 2 stacks of Tip of the Spear</>,
     ),
   },
-  {
-    spell: TALENTS.BUTCHERY_TALENT,
-    condition: cnd.describe(hasFocus(30), (tense) => <>available to apply Merciless Blow</>),
-  },
+  TALENTS.BUTCHERY_TALENT,
   {
     spell: TALENTS.KILL_SHOT_SURVIVAL_TALENT,
     condition: cnd.describe(
@@ -143,21 +127,17 @@ export const apl = build([
   {
     spell: TALENTS.KILL_COMMAND_SURVIVAL_TALENT,
     condition: cnd.describe(
-      cnd.and(
-        cnd.hasResource(RESOURCE_TYPES.FOCUS, { atMost: 77 }),
-        cnd.or(
-          cnd.and(
-            cnd.hasTalent(TALENTS.RELENTLESS_PRIMAL_FEROCITY_TALENT),
-            cnd.buffMissing(SPELLS.COORDINATED_ASSAULT_BUFF),
-          ),
-          cnd.or(
-            cnd.and(
-              cnd.hasTalent(TALENTS.RELENTLESS_PRIMAL_FEROCITY_TALENT),
-              cnd.buffPresent(SPELLS.COORDINATED_ASSAULT_BUFF),
-              cnd.buffMissing(SPELLS.TIP_OF_THE_SPEAR_CAST),
-            ),
-            cnd.hasResource(RESOURCE_TYPES.FOCUS, { atMost: 30 }),
-          ),
+      cnd.or(
+        cnd.and(
+          cnd.hasResource(RESOURCE_TYPES.FOCUS, { atMost: 77 }),
+          cnd.buffMissing(SPELLS.COORDINATED_ASSAULT_BUFF),
+          cnd.buffMissing(SPELLS.TIP_OF_THE_SPEAR_CAST),
+          cnd.hasTalent(TALENTS.RELENTLESS_PRIMAL_FEROCITY_TALENT),
+        ),
+        cnd.and(
+          cnd.buffPresent(SPELLS.COORDINATED_ASSAULT_BUFF),
+          cnd.hasResource(RESOURCE_TYPES.FOCUS, { atMost: 30 }),
+          cnd.hasTalent(TALENTS.RELENTLESS_PRIMAL_FEROCITY_TALENT),
         ),
       ),
 
@@ -166,8 +146,7 @@ export const apl = build([
         <>
           you {tenseAlt(tense, <>have</>, <>had</>)} at most 77 focus and don't have
           <SpellLink spell={TALENTS.RELENTLESS_PRIMAL_FEROCITY_TALENT} /> up OR you have
-          <SpellLink spell={TALENTS.RELENTLESS_PRIMAL_FEROCITY_TALENT} /> with either no Tip stacks
-          or less than 30 focus.
+          <SpellLink spell={TALENTS.RELENTLESS_PRIMAL_FEROCITY_TALENT} /> with less than 30 focus.
         </>
       ),
     ),
